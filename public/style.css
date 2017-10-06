@@ -1,0 +1,8 @@
+
+/*---------------- header -------------------*/
+
+.header-image {
+  height: 10vh;
+  background:url(../assets/arrive_logistics_logo.png) center center no-repeat;
+  background-size: contain;
+}

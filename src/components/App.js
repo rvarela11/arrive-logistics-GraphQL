@@ -6,8 +6,23 @@ class App extends Component {
 
   render() {
     return <div className="mainContainer">
-      <h1>Howdy</h1>
+      <header className="header-image"></header>
+      <button onClick={this.handleSearchCityClick}>Click</button>
     </div>
+  }
+  handleSearchCityClick = () => {
+    const URL = 'http://arrive-interview-api.azurewebsites.net/api/carriers';
+
+    fetch(URL)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 }
 
