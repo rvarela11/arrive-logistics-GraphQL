@@ -5,3 +5,11 @@ export function apiDataSearchCity (apiData) {
     apiData
   }
 }
+
+export const ChangeCitySearched = 'ChangeCitySearched';
+export function changeCitySearched (city) {
+  return {
+    type: ChangeCitySearched,
+    city
+  }
+}

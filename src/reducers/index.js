@@ -1,5 +1,6 @@
 const initialState = {
-  apiData: []
+  apiData: [],
+  cityInputValue: 'Austin',
 };
 
 export function reducer (state = initialState, action) {
@@ -8,6 +9,11 @@ export function reducer (state = initialState, action) {
         return {
           ...state,
           apiData: action.apiData
+        };
+    case 'ChangeCitySearched':
+        return {
+          ...state,
+          cityInputValue: action.city
         };
     default:
         return state;

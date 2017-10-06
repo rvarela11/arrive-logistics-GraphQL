@@ -7,7 +7,7 @@ class Searchbox extends Component {
   }
 
   render() {
-    return <div className="searchbox-container container">
+    return <div className="container">
       <form onSubmit={this.handleSubmit}>
           <input id="searchbox_form_input" type="text"  placeholder="Search by city" onChange={this.handleChange}/>
       </form>

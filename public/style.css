@@ -1,11 +1,5 @@
 /* Arrive Logistics blue-color #31abdf*/
 
-/*---------------- GENERAL -------------------*/
-
-.container {
-  margin: auto;
-}
-
 /*---------------- header -------------------*/
 
 .header-image {
@@ -18,12 +12,9 @@
 
 /*---------------- App.js -------------------*/
 
-.main-container {
-  width: 95%;
+.search-results-title {
+  text-align: center;
 }
-
-/*---------------- Searchbox.js -------------------*/
-
-.searchbox-container {
-  width: 50%;
+.search-results-title span {
+  border-bottom: 2px solid #31abdf;
 }
