@@ -1,8 +1,29 @@
+/* Arrive Logistics blue-color #31abdf*/
+
+/*---------------- GENERAL -------------------*/
+
+.container {
+  margin: auto;
+}
 
 /*---------------- header -------------------*/
 
 .header-image {
+  border-top: 10px solid #fff;
+  margin-bottom: 10px;
   height: 10vh;
   background:url(../assets/arrive_logistics_logo.png) center center no-repeat;
   background-size: contain;
+}
+
+/*---------------- App.js -------------------*/
+
+.main-container {
+  width: 95%;
+}
+
+/*---------------- Searchbox.js -------------------*/
+
+.searchbox-container {
+  width: 50%;
 }
