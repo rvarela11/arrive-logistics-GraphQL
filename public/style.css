@@ -44,7 +44,8 @@
 }
 .search-results__name {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
 }
 .search-results__locations {
   display: flex;
