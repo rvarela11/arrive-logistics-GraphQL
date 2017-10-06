@@ -1,15 +1,7 @@
-export const ADDMESSAGE = 'ADDMESSAGE';
-export function addMessage (message) {
+export const ApiDataSearchCity = 'ApiDataSearchCity';
+export function apiDataSearchCity (apiData) {
   return {
-    type: ADDMESSAGE,
-    message
-  }
-}
-
-export const DELETEMESSAGE = 'DELETEMESSAGE';
-export function deleteMessage (index) {
-  return {
-    type: DELETEMESSAGE,
-    index
+    type: ApiDataSearchCity,
+    apiData
   }
 }
