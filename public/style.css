@@ -25,3 +25,50 @@
 .dropdown-container {
   width: 50%;
 }
+
+/*---------------- SearchResults.js -------------------*/
+
+.search-results-container {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+.search-results-container:hover {
+  background-color: #31abdf;
+  color: #fff;
+}
+.search-results-container > div {
+  flex: 1;
+}
+.search-results__name {
+  display: flex;
+  justify-content: center;
+}
+.search-results__locations {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.search-results__locations > h6 {
+  width: 30%;
+}
+
+@media screen and (max-width: 1060px) {
+  .search-results__locations {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-results__locations > h6 {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .search-results-container {
+    width: 100% !important;
+  }
+  h5 {
+    font-size: 1.25rem !important;
+  }
+}

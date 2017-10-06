@@ -7,14 +7,9 @@ import { apiGetAllData, apiDataResponseSearch, changeCitySearched } from '../act
 //Components
 import SearchBox from './SearchBox';
 import Dropdown from './Dropdown';
-import SearchResults from './SearchResults';
+import ShowResults from './ShowResults';
 
 class App extends Component {
-
-  state = {
-    citiesArrayFromAPI: [],
-    inputValue: ''
-  }
 
   componentDidMount () {
     //API GET call to get all the data. This will be used to fill in the dropdown cities option tags
@@ -33,31 +28,12 @@ class App extends Component {
   }
 
   render() {
-
-    // Condition to only pass array data to the SearchResults Component
-    let apiDataResults = [];
-    let showError = false;
-    if (Array.isArray(this.props.apiDataSearchResults)) {
-      apiDataResults = this.props.apiDataSearchResults;
-      showError = false;
-      // this.getCitySearchedFromAPIData(apiDataResults);
-    } else {
-      apiDataResults = [];
-      showError = true;
-    }
-
     return <div>
       <header className="header-image"></header>
       <div className="container">
         <SearchBox inputValue={this.handleSearchByCity} title="city"/>
         {this.selectCity()}
-        {/* <h5 className="search-results-title">Results for <span>{this.props.cityInputValue}</span></h5> */}
-        {showError &&
-          <h6 className="red-text error-search-results">No carriers found with provided city</h6>
-        }
-        {apiDataResults.map((carrier, index) =>
-          <SearchResults key={Math.random()} id={carrier.Id} name={carrier.Name}/>
-        )}
+        <ShowResults cityInputValue={this.props.cityInputValue} apiDataSearchResults={this.props.apiDataSearchResults}/>
       </div>
     </div>
   }
@@ -86,22 +62,10 @@ class App extends Component {
       <Dropdown title="City" arrayValues={allCities} valueSelected={this.handleSearchByCity}/>
     </div>
   }
-
   handleSearchByCity = (inputValue) => {
-    this.setState({inputValue});
     this.ApiGetSearchResults(inputValue);
+    this.props.changeCitySearched(inputValue);
   }
-
-  // getCitySearchedFromAPIData = (apiDataResults) => {
-  //   if (apiDataResults.length > 0) {
-  //     const cityResultFromAPI = apiDataResults[0].Locations.filter((locations) => {
-  //       const regex = new RegExp(this.state.inputValue, 'gi');
-  //       return locations.City.match(regex)
-  //     })
-  //     this.props.changeCitySearched(cityResultFromAPI[0].City);
-  //   }
-  // }
-
   ApiGetSearchResults = (inputValue) => {
     //API GET call to get all the data from the searchbox or dropdown
     let URL = `http://arrive-interview-api.azurewebsites.net/api/carriers/${inputValue}`;
