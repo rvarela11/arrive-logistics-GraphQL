@@ -12,9 +12,16 @@
 
 /*---------------- App.js -------------------*/
 
-.search-results-title {
+.search-results-title,
+.error-search-results {
   text-align: center;
 }
 .search-results-title span {
   border-bottom: 2px solid #31abdf;
+}
+
+/*---------------- Dropdown.js -------------------*/
+
+.dropdown-container {
+  width: 50%;
 }

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 
-class Searchbox extends Component {
+class SearchBox extends Component {
 
   state = {
     inputValue: ''
   }
 
   render() {
-    return <div className="container">
+    return <div className="container input-field">
       <form onSubmit={this.handleSubmit}>
-          <input id="searchbox_form_input" type="text"  placeholder="Search by city" onChange={this.handleChange}/>
+          <input id="searchbox_form_input" type="search" onChange={this.handleChange}/>
+          <label htmlFor="searchbox_form_input">Search by {this.props.title}</label>
       </form>
     </div>
   }
@@ -30,4 +31,4 @@ class Searchbox extends Component {
 
 }
 
-export default Searchbox;
+export default SearchBox;

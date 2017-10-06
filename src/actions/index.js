@@ -1,7 +1,15 @@
-export const ApiDataSearchCity = 'ApiDataSearchCity';
-export function apiDataSearchCity (apiData) {
+export const ApiGetAllData = 'ApiGetAllData';
+export function apiGetAllData (apiData) {
   return {
-    type: ApiDataSearchCity,
+    type: ApiGetAllData,
+    apiData
+  }
+}
+
+export const ApiDataResponseSearch = 'ApiDataResponseSearch';
+export function apiDataResponseSearch (apiData) {
+  return {
+    type: ApiDataResponseSearch,
     apiData
   }
 }

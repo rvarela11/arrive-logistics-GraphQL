@@ -1,14 +1,20 @@
 const initialState = {
-  apiData: [],
-  cityInputValue: 'Austin',
+  apiDataAll: [],
+  apiDataSearchResults: [],
+  cityInputValue: '',
 };
 
 export function reducer (state = initialState, action) {
   switch (action.type) {
-    case 'ApiDataSearchCity':
+    case 'ApiGetAllData':
         return {
           ...state,
-          apiData: action.apiData
+          apiDataAll: action.apiData
+        };
+    case 'ApiDataResponseSearch':
+        return {
+          ...state,
+          apiDataSearchResults: action.apiData
         };
     case 'ChangeCitySearched':
         return {
