@@ -24,7 +24,7 @@ class SearchResults extends Component {
     </div>
       {this.state.show &&
         this.state.apiDataSearchResultsCarrier.map((carrier, index) =>
-        <CarrierCard key={index} carrierName={carrier.Name} price={carrier.PricePerLoad} contactName={carrier.ContactName} contactEmail={carrier.ContactEmail} contactPhone={carrier.ContactPhone}/>
+        <CarrierCard key={index} price={carrier.PricePerLoad} contactName={carrier.ContactName} contactEmail={carrier.ContactEmail} contactPhone={carrier.ContactPhone} capabilities={carrier.Capabilities}/>
       )
       }
     </div>
