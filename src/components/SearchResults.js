@@ -44,7 +44,6 @@ class SearchResults extends Component {
       })
       .then((data) => {
         const apiDataSearchResultsCarrier = this.state.apiDataSearchResultsCarrier;
-        console.log(apiDataSearchResultsCarrier);
         apiDataSearchResultsCarrier.push(data);
         this.setState({apiDataSearchResultsCarrier})
       })

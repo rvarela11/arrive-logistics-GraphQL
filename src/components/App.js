@@ -12,7 +12,8 @@ import ShowResults from './ShowResults';
 class App extends Component {
 
   componentDidMount () {
-    //API GET call to get all the data. This will be used to fill in the dropdown cities option tags
+    //API call to get all the data.
+    //This will be used to fill in the dropdown cities option tags.
     let URL = 'http://arrive-interview-api.azurewebsites.net/api/carriers';
 
     fetch(URL)
@@ -38,16 +39,19 @@ class App extends Component {
     </div>
   }
 
+  // Function to only get the cities.
   selectCity = () => {
     const allCitiesArray = [];
     const allCities = [];
 
+    // For each loop to get locations array
     this.props.apiDataAll.forEach((carrier) => {
       carrier.Locations.forEach((location) => {
         allCitiesArray.push(location.City);
       });
     });
 
+    // Reduce function to not get any duplicate cities
     const allCitiesObject = allCitiesArray.reduce((obj,item) => {
       if (!obj[item]){
         obj[item] = 0;
@@ -56,18 +60,21 @@ class App extends Component {
       return obj;
     },{});
 
+    // Organize all the cities ay alphabetical order
     allCities.push(Object.keys(allCitiesObject).sort());
 
     return <div className="dropdown-container container">
       <Dropdown title="City" arrayValues={allCities} valueSelected={this.handleSearchByCity}/>
     </div>
   }
+  // Funciton will pass the value given from the search or dropdown to make an API call.
+  // It will also display the value being search for under 'Results for ...'
   handleSearchByCity = (inputValue) => {
     this.ApiGetSearchResults(inputValue);
     this.props.changeCitySearched(inputValue);
   }
   ApiGetSearchResults = (inputValue) => {
-    //API GET call to get all the data from the searchbox or dropdown
+    //API call to get all the data from the searchbox or dropdown
     let URL = `http://arrive-interview-api.azurewebsites.net/api/carriers/${inputValue}`;
 
     fetch(URL)
