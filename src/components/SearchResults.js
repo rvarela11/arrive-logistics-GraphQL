@@ -6,7 +6,8 @@ import CarrierCard from './CarrierCard';
 class SearchResults extends Component {
 
   state = {
-    show: false
+    show: false,
+    apiDataSearchResultsCarrier: []
   }
 
   render() {
@@ -21,24 +22,36 @@ class SearchResults extends Component {
         )}
       </div>
     </div>
-      {this.state.show && <CarrierCard/>}
+      {this.state.show &&
+        this.state.apiDataSearchResultsCarrier.map((carrier, index) =>
+        <CarrierCard key={index} carrierName={carrier.Name} price={carrier.PricePerLoad} contactName={carrier.ContactName} contactEmail={carrier.ContactEmail} contactPhone={carrier.ContactPhone}/>
+      )
+      }
     </div>
   }
 
   handleClick = () => {
+    // Change the state show to hide/show the carrier's info
     this.setState({show: !this.state.show});
-    // let URL = `http://arrive-interview-api.azurewebsites.net/api/carrierDetails/${this.props.id}`;
-    //
-    // fetch(URL)
-    // .then((response) => {
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+
+    // If the apiDataSearchResultsCarrier array is empty, make an API call and store the response in the components state
+    if(this.state.apiDataSearchResultsCarrier.length <= 0){
+      let URL = `http://arrive-interview-api.azurewebsites.net/api/carrierDetails/${this.props.id}`;
+
+      fetch(URL)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const apiDataSearchResultsCarrier = this.state.apiDataSearchResultsCarrier;
+        console.log(apiDataSearchResultsCarrier);
+        apiDataSearchResultsCarrier.push(data);
+        this.setState({apiDataSearchResultsCarrier})
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   }
 
 }

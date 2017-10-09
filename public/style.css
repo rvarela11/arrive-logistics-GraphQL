@@ -56,6 +56,29 @@
   width: 30%;
 }
 
+/*---------------- CarrierCard.js -------------------*/
+
+.card-container {
+  margin: 0 auto !important;
+  margin-bottom: 20px !important;
+}
+.card-content-carrierName,
+.card-content-carrierPrice {
+  padding: 1% 1% 1% 20px !important;
+}
+.card > div {
+  padding-left: 20px;
+}
+.card-content-contactInfo {
+  display: flex;
+  flex-direction: row;
+}
+.card-content-contactInfo span {
+  margin: 0 10px;
+}
+
+/*---------------- @media -------------------*/
+
 @media screen and (max-width: 1060px) {
   .search-results__locations {
     display: flex;
