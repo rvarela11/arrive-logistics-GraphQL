@@ -60,7 +60,7 @@ class App extends Component {
       return obj;
     },{});
 
-    // Organize all the cities ay alphabetical order
+    // Organize all the cities by alphabetical order
     allCities.push(Object.keys(allCitiesObject).sort());
 
     return <div className="dropdown-container container">
