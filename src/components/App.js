@@ -7,7 +7,7 @@ import { apiGetAllData, apiDataResponseSearch, changeCitySearched } from '../act
 //Components
 import SearchBox from './SearchBox';
 import Dropdown from './Dropdown';
-import ShowResults from './ShowResults';
+import ShowResults from './show-results';
 
 class App extends Component {
 
