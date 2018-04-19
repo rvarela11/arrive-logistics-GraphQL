@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { apiGetAllData, apiDataResponseSearch, changeCitySearched } from '../actions/index';
 
 //Components
-import SearchBox from './SearchBox';
-import Dropdown from './Dropdown';
+import SearchBox from './search-box';
+import Dropdown from './drop-down';
 import ShowResults from './show-results';
 
 class App extends Component {

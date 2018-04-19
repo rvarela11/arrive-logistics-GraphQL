@@ -1,10 +1,10 @@
 import React from 'react';
 
 //Components
-import SearchResults from '../SearchResults';
+import CarrierCard from '../carrier-card';
 
 const ShowResults = props => {
-  // Condition to only pass array data to the SearchResults Component
+  // Condition to only pass array data to the CarrierCard Component
   let apiDataResults = [];
   let showError = true;
 
@@ -17,7 +17,7 @@ const ShowResults = props => {
     <h5 className="search-results-title">Results for <span>{props.cityInputValue}</span></h5>
     {showError && <h6 className="red-text error-search-results">No carriers found with provided city</h6>}
     {apiDataResults.map((carrier, index) =>
-      <SearchResults key={index} id={carrier.Id} name={carrier.Name} locations={carrier.Locations}/>
+      <CarrierCard key={index} id={carrier.Id} name={carrier.Name} locations={carrier.Locations}/>
     )}
   </div>
 

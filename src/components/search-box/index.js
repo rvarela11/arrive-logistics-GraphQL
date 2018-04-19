@@ -9,7 +9,7 @@ class SearchBox extends Component {
   render() {
     return <div className="container input-field">
       <form onSubmit={this.handleSubmit}>
-          <input id="searchbox_form_input" type="search" onChange={this.handleChange}/>
+          <input id="searchbox_form_input" type="search" value={this.state.inputValue} onChange={this.handleChange} />
           <label htmlFor="searchbox_form_input">Search by {this.props.title}</label>
       </form>
     </div>
@@ -23,10 +23,8 @@ class SearchBox extends Component {
     e.preventDefault();
     this.props.inputValue(this.state.inputValue);
 
-    // Clean inputValue state and input value
-    this.setState({ inputValue: ''});
-    const searchbox_form_input = document.getElementById("searchbox_form_input");
-    searchbox_form_input.value = "";
+    //Remove the focus from the search box
+    e.target.children[0].blur();
   }
 
 }

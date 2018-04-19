@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 //Components
-import CarrierCard from './CarrierCard';
+import CarrierCardDetails from '../carrier-card-details';
 
-class SearchResults extends Component {
+class CarrierCard extends Component {
 
   state = {
     show: false,
@@ -24,7 +24,7 @@ class SearchResults extends Component {
     </div>
       {this.state.show &&
         this.state.apiDataSearchResultsCarrier.map((carrier, index) =>
-        <CarrierCard key={index} price={carrier.PricePerLoad} contactName={carrier.ContactName} contactEmail={carrier.ContactEmail} contactPhone={carrier.ContactPhone} capabilities={carrier.Capabilities}/>
+        <CarrierCardDetails key={index} price={carrier.PricePerLoad} contactName={carrier.ContactName} contactEmail={carrier.ContactEmail} contactPhone={carrier.ContactPhone} capabilities={carrier.Capabilities}/>
       )
       }
     </div>
@@ -35,7 +35,7 @@ class SearchResults extends Component {
     this.setState({show: !this.state.show});
 
     // If the apiDataSearchResultsCarrier array is empty, make an API call and store the response in the components state
-    if(this.state.apiDataSearchResultsCarrier.length <= 0){
+    if(this.state.apiDataSearchResultsCarrier.length === 0){
       let URL = `http://arrive-interview-api.azurewebsites.net/api/carrierDetails/${this.props.id}`;
 
       fetch(URL)
@@ -55,4 +55,4 @@ class SearchResults extends Component {
 
 }
 
-export default SearchResults;
+export default CarrierCard;
