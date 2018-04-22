@@ -5,88 +5,45 @@ import { connect } from 'react-redux';
 import { apiGetAllData, apiDataResponseSearch, changeCitySearched } from '../actions/index';
 
 //Components
-import SearchBox from './search-box';
-import Dropdown from './drop-down';
+import SearchBoxAutocomplete from './search-box-autocomplete';
 import ShowResults from './show-results';
+import { getAllCities } from '../utils';
 
 class App extends Component {
 
   componentDidMount () {
     //API call to get all the data.
-    //This will be used to fill in the dropdown cities option tags.
+    //This will be used to fill in the search box autocomplete cities
     let URL = 'http://arrive-interview-api.azurewebsites.net/api/carriers';
 
     fetch(URL)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      this.props.apiGetAllData(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .then(res => res.json())
+    .then(data => this.props.apiGetAllData(data))
+    .catch((error) => console.log(error));
   }
 
   render() {
     return <div>
       <header className="header-image"></header>
       <div className="container">
-        <SearchBox inputValue={this.handleSearchByCity} title="city"/>
-        {this.selectCity()}
+        <SearchBoxAutocomplete inputValue={this.handleSearchByCity} allCities={getAllCities(this.props.apiDataAll)}/>
         <ShowResults cityInputValue={this.props.cityInputValue} apiDataSearchResults={this.props.apiDataSearchResults}/>
       </div>
     </div>
   }
 
-  // Function to only get the cities.
-  selectCity = () => {
-    const allCitiesArray = [];
-    const allCities = [];
-
-    // For each loop to get locations array
-    this.props.apiDataAll.forEach((carrier) => {
-      carrier.Locations.forEach((location) => {
-        allCitiesArray.push(location.City);
-      });
-    });
-
-    // Reduce function to not get any duplicate cities
-    const allCitiesObject = allCitiesArray.reduce((obj,item) => {
-      if (!obj[item]){
-        obj[item] = 0;
-      }
-      obj[item]++;
-      return obj;
-    },{});
-
-    // Organize all the cities by alphabetical order
-    allCities.push(Object.keys(allCitiesObject).sort());
-
-    return <div className="dropdown-container container">
-      <Dropdown title="City" arrayValues={allCities} valueSelected={this.handleSearchByCity}/>
-    </div>
-  }
-  // Funciton will pass the value given from the search or dropdown to make an API call.
+  // Funciton will pass the value given from the search to make an API call.
   // It will also display the value being search for under 'Results for ...'
   handleSearchByCity = (inputValue) => {
-    this.ApiGetSearchResults(inputValue);
     this.props.changeCitySearched(inputValue);
-  }
-  ApiGetSearchResults = (inputValue) => {
-    //API call to get all the data from the searchbox or dropdown
+
+    //API call to get all the data from the searchbox
     let URL = `http://arrive-interview-api.azurewebsites.net/api/carriers/${inputValue}`;
 
     fetch(URL)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      this.props.apiDataResponseSearch(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    .then(res => res.json())
+    .then(data => this.props.apiDataResponseSearch(data))
+    .catch((error) => console.log(error));
   }
 
 }
