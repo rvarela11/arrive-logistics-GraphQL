@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-//Actions
-import { apiGetAllData, apiDataResponseSearch, changeCitySearched } from '../actions/index';
+//GraphQL
+import { graphql, compose } from 'react-apollo';
 
 //Components
 import SearchBoxAutocomplete from './search-box-autocomplete';
 import ShowResults from './show-results';
+
 import { getAllCities } from '../utils';
+import { getAllCitiesFromAPI, getCarrierListBySearch, getCityInputValueFromState } from './queries';
+import { updateCityInputValue } from './mutations';
+import { defaults } from '../state';
 
 class App extends Component {
 
-  componentDidMount () {
-    //API call to get all the data.
-    //This will be used to fill in the search box autocomplete cities
-    let URL = 'http://arrive-interview-api.azurewebsites.net/api/carriers';
-
-    fetch(URL)
-    .then(res => res.json())
-    .then(data => this.props.apiGetAllData(data))
-    .catch((error) => console.log(error));
-  }
-
   render() {
+    const {
+      allCitiesFromAPI,
+      apiDataSearchResults,
+      cityInputValue
+    } = this.props;
     return <div>
       <header className="header-image"></header>
       <div className="container">
-        <SearchBoxAutocomplete inputValue={this.handleSearchByCity} allCities={getAllCities(this.props.apiDataAll)}/>
-        <ShowResults cityInputValue={this.props.cityInputValue} apiDataSearchResults={this.props.apiDataSearchResults}/>
+        <SearchBoxAutocomplete inputValue={this.handleSearchByCity} allCities={getAllCities(allCitiesFromAPI)}/>
+        <ShowResults cityInputValue={cityInputValue} apiDataSearchResults={(apiDataSearchResults) ? apiDataSearchResults : []}/>
       </div>
     </div>
   }
@@ -35,33 +32,68 @@ class App extends Component {
   // Funciton will pass the value given from the search to make an API call.
   // It will also display the value being search for under 'Results for ...'
   handleSearchByCity = (inputValue) => {
-    this.props.changeCitySearched(inputValue);
-
-    //API call to get all the data from the searchbox
-    let URL = `http://arrive-interview-api.azurewebsites.net/api/carriers/${inputValue}`;
-
-    fetch(URL)
-    .then(res => res.json())
-    .then(data => this.props.apiDataResponseSearch(data))
-    .catch((error) => console.log(error));
+    this.props.updateCityInputValue(inputValue);
   }
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        apiGetAllData: (apiData) => dispatch(apiGetAllData(apiData)),
-        apiDataResponseSearch: (apiData) => dispatch(apiDataResponseSearch(apiData)),
-        changeCitySearched: (city) => dispatch(changeCitySearched(city)),
-    };
-};
-
-const mapStateToProps = (state) => {
-    return {
-        apiDataAll: state.apiDataAll,
-        apiDataSearchResults: state.apiDataSearchResults,
-        cityInputValue: state.cityInputValue,
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+export default compose(
+  // Queries
+  graphql(getAllCitiesFromAPI, {
+        props: ({ data }) => {
+          if (data.loading) {
+            return {
+              allCitiesFromAPI: defaults.allCitiesFromAPI
+            }
+          }
+          if (data.error) {
+            return { error: data.error }
+          }
+            return {
+                allCitiesFromAPI: data.Cities,
+            };
+        }
+    }),
+    graphql(getCityInputValueFromState, {
+        props: ({ data }) => {
+            if (data.loading) {
+                return {
+                    cityInputValue: defaults.cityInputValue,
+                };
+            }
+            return {
+                cityInputValue: data.cityInputValue
+            };
+        }
+    }),
+    graphql(getCarrierListBySearch, {
+        options: props => ({
+            variables: {
+                value: props.cityInputValue
+            },
+            fetchPolicy: 'network-only'
+        }),
+        skip: props => props.cityInputValue === '',
+        props: ({ data }) => {
+          if (data.loading) {
+            return {
+              apiDataSearchResults: []
+            }
+          }
+          if (data.error) {
+            return { error: data.error }
+          }
+            return {
+                apiDataSearchResults: data.CarrierListByCity,
+            };
+        }
+    }),
+    // Mutations
+    graphql(updateCityInputValue, {
+        props: ({ mutate }) => ({
+            updateCityInputValue: (cityInputValue) => {
+                mutate({ variables: { cityInputValue } });
+            }
+        })
+    })
+)(App);

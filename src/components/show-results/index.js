@@ -16,8 +16,8 @@ const ShowResults = props => {
   return <div>
     <h5 className="search-results-title">Results for <span>{props.cityInputValue}</span></h5>
     {showError && <h6 className="red-text error-search-results">No carriers found with provided city</h6>}
-    {apiDataResults.map((carrier, index) =>
-      <CarrierCard key={index} id={carrier.Id} name={carrier.Name} locations={carrier.Locations}/>
+    {apiDataResults.map((carrier) =>
+      <CarrierCard key={carrier.Id} id={carrier.Id} name={carrier.Name} locations={carrier.Locations}/>
     )}
   </div>
 
