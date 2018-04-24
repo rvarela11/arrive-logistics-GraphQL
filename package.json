@@ -2,7 +2,7 @@
   "name": "Arrive-Logistics-Search-Carriers",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rvarela11.github.io/arrive-logistics",
+  "homepage": "https://rvarela11.github.io/arrive-logistics-graphql",
   "babel": {
     "presets": [
       "es2015",
